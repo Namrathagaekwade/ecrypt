@@ -4,6 +4,11 @@ import pyAesCrypt
 import os
 app = Flask(__name__)
 
+uploads_dir = os.path.join(app.instance_path, 'uploads')
+download_dir = os.path.join(app.instance_path, 'downloads')
+#os.makedirs(uploads_dir,False)
+#os.makedirs(download_dir,False)
+
 @app.route('/')
 def upload_file():
    return render_template('upload.html')
@@ -13,17 +18,18 @@ def uploadenc():
    bufferSize = 64 * 1024
    if request.method == 'POST':
       f = request.files['file']
-      f.save(secure_filename(f.filename))
-      uploads = os.path.join(os.getcwd(), f.filename)       
+      f.save(os.path.join(uploads_dir,f.filename))
+      upload_file = os.path.join(uploads_dir, f.filename)       
       password = request.form['text']
       encfile = f.filename + ".aes"
-      pyAesCrypt.encryptFile(uploads, encfile , password , bufferSize) 
+      download_file = os.path.join(download_dir, encfile)
+      pyAesCrypt.encryptFile(upload_file, download_file , password , bufferSize) 
       @after_this_request
       def remove_enc(response):
-         os.remove(uploads)
-         os.remove(encfile)
+         os.remove(upload_file)
+         os.remove(download_file)
          return response
-      return send_file(encfile, as_attachment=True) 
+      return send_file(download_file, as_attachment=True) 
 
 @app.route('/reload', methods = ['POST'])
 def reload():
@@ -35,17 +41,18 @@ def uploaddec():
    bufferSize = 64 * 1024
    if request.method == 'POST':
       f = request.files['file']
-      f.save(secure_filename(f.filename))
-      uploads = os.path.join(os.getcwd(), f.filename)       
+      f.save(os.path.join(uploads_dir,f.filename))
+      upload_file = os.path.join(uploads_dir, f.filename)        
       password = request.form['text']
       decfile = f.filename.split('.aes')
-      pyAesCrypt.decryptFile(uploads, decfile[0], password, bufferSize) 
+      download_file = os.path.join(download_dir,  decfile[0])
+      pyAesCrypt.encryptFile(upload_file, download_file , password , bufferSize)  
       @after_this_request
       def remove_dec(response):
-         os.remove(uploads)
-         os.remove(decfile[0])
+         os.remove(upload_file)
+         os.remove(download_file)
          return response
-      return send_file(decfile[0], as_attachment=True)
+      return send_file(download_file, as_attachment=True) 
 
 
 if __name__ == '__main__':
