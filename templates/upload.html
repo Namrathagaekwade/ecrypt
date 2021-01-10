@@ -2,7 +2,7 @@
    <body>
       <section  style="background-color:#ff7f50; width: 40%">
          <h1 style="font-size:40px;">Encryption</h1>
-         <form action = "http://ubuntu@ec2-13-233-89-155.ap-south-1.compute.amazonaws.com/encrypt" method = "POST" 
+         <form action = "/encrypt" method = "POST" 
             enctype = "multipart/form-data">
             
             <p style=" font-size: 25px;">Provide the file and Password here:- </p>
@@ -10,14 +10,14 @@
             Password  <input name="text"></p>
             <p style="text-align:center"><input type = "submit" style="font-size: 22px;"  /></p>          
          </form>  
-         <form action = "http://ubuntu@ec2-13-233-89-155.ap-south-1.compute.amazonaws.com/reload" method = "POST" 
+         <form action = "/reload" method = "POST" 
             enctype = "multipart/form-data">
             <p style="text-align:center"><input type = "submit" value = "Add another file"style="font-size: 22px;"  /></p>          
          </form> 
       </section>
       <section  style="background-color:#8d50ff; width: 40%">
          <h1 style="font-size:40px;">Decryption</h1>
-         <form action = "http://ubuntu@ec2-13-233-89-155.ap-south-1.compute.amazonaws.com/decrypt" method = "POST" 
+         <form action = "/decrypt" method = "POST" 
             enctype = "multipart/form-data">
             
             <p style=" font-size: 25px;">Provide the file and Password here:- </p>
@@ -25,7 +25,7 @@
             Password  <input name="text"></p>
             <p style="text-align:center"><input type = "submit" style="font-size: 22px;"  /></p>                      
          </form>  
-         <form action = "http://ubuntu@ec2-13-233-89-155.ap-south-1.compute.amazonaws.com/reload" method = "POST" 
+         <form action = "/reload" method = "POST" 
             enctype = "multipart/form-data">
             <p style="text-align:center"><input type = "submit" value = "Add another file"style="font-size: 22px;"  /></p>          
          </form> 
