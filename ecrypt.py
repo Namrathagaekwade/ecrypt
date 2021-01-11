@@ -46,7 +46,7 @@ def uploaddec():
       password = request.form['text']
       decfile = f.filename.split('.aes')
       download_file = os.path.join(download_dir,  decfile[0])
-      pyAesCrypt.encryptFile(upload_file, download_file , password , bufferSize)  
+      pyAesCrypt.decryptFile(upload_file, download_file , password , bufferSize)  
       @after_this_request
       def remove_dec(response):
          os.remove(upload_file)
